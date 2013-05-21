@@ -1,6 +1,6 @@
 :Dairy
 1 Milk
-0 Cheese
+1 Cheese
 0 Yogurt
 :Bakery
 0 Bread

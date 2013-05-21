@@ -14,7 +14,14 @@ if ( $_POST['action'] == "toggleChecked")
 
 function writeChecked($name, $checked)
 {
-    $f = fopen("./lists/list.txt", "r+");
+    $filename = "./lists/list.txt";
+    
+    $f = fopen($filename, "r+");
+    
+    if (!$f)
+    {
+        return("!File ". $filename ." not opened for writing.");
+    }
 
     $foundPos = -1;
     

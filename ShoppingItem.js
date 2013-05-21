@@ -88,11 +88,14 @@ function ShoppingItem(input) {
                 
         // TODO: Move this into dedicated model.
         var self = this;
-        $.post("./write.php", "action=toggleChecked&name=" + this.name +"&checked=" + this.checked, function(){self.postDone()});
+        $.post("./write.php", "action=toggleChecked&name=" + this.name +"&checked=" + this.checked, function(data){self.postDone(data)});
     };
     
     this.postDone = function( response ) {
         console.log("Response: " + response + "this " + this.name);
+        
+        if (response[0] === "!")
+            console.error("Error: " + response);
         
         if (response !== this.checked)
             this.draw();
