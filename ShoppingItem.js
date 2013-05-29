@@ -55,6 +55,7 @@ function ShoppingItem(input) {
         
         //console.log( this.divElement.parentNode );
         //console.log( newParent );
+        console.log("drew " + this.name);
         
         this.reparent( newParent );
     };
@@ -83,21 +84,31 @@ function ShoppingItem(input) {
         //if ( event.stopPropagation ) event.stopPropagation = true;
         //else event.cancelBubble = true;
         
-        this.checked = !this.checked;
+        var desiredState = !this.checked;
+        
+        // Change state and redraw.
+        this.checked = desiredState;
         this.draw();
+        
+        $(this.divElement).addClass("spinning");
                 
         // TODO: Move this into dedicated model.
         var self = this;
-        $.post("./write.php", "action=toggleChecked&name=" + this.name +"&checked=" + this.checked, function(data){self.postDone(data)});
+        $.post("./write.php", "action=toggleChecked&name=" + this.name +"&checked=" + desiredState, function(data){self.postDone(data)});
     };
     
     this.postDone = function( response ) {
-        console.log("Response: " + response + "this " + this.name);
+        console.log("Response: " + response + "; this: " + this.name);
+        console.log("this.checked = " + this.checked);
+        
+        $(this.divElement).removeClass("spinning");
         
         if (response[0] === "!")
             console.error("Error: " + response);
         
-        if (response !== this.checked)
+        if (response !== this.checked) {
+            this.checked = (response === "true");
             this.draw();
+        }
     };
 }

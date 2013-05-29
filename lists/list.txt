@@ -1,10 +1,10 @@
 :Dairy
 1 Milk
 1 Cheese
-0 Yogurt
+1 Yogurt
 :Bakery
 0 Bread
 :Produce
-1 Tomatoes
+0 Tomatoes
 0 Carrots
 1 Onions

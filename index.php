@@ -9,22 +9,22 @@
     
     <link href="styles.css" rel="stylesheet" type="text/css" >
     
-    <title>4054 shopping</title>
+    <title>Shopping List</title>
 
 <script>
     function getData() {
-        $.post("./read.php", "fileName=./lists/list.txt", dataGotten);
+        $.post("./read.php", "fileName=./lists/list.txt", handleDataGotten);
     };
     
-    function dataGotten( response ) {
-        console.log("Response: " + response);
+    function handleDataGotten( response ) {
+        console.log("Data gotten. Response: " + response);
         
         var data = JSON.parse(response);
         
-        printData(data);
+        drawData(data);
     };
     
-    function printData(data) {
+    function drawData(data) {
                 
         var items = [];
         

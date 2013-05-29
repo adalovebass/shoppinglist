@@ -51,6 +51,12 @@ body {
     border-bottom: 2px solid #bbbbbb;
 }
 
+.spinning {
+    background-image: url('images/spinner.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 #header {
     line-height: 2.0em;
     

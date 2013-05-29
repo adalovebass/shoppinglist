@@ -10,6 +10,9 @@
 if ( $_POST['action'] == "toggleChecked")
 {
     echo writeChecked( $_POST['name'], $_POST['checked']);
+    
+    $sleepTime = rand(0, 3000000);
+    usleep($sleepTime);
 }
 
 function writeChecked($name, $checked)
@@ -39,6 +42,8 @@ function writeChecked($name, $checked)
             break;
         }
     }
+    
+    // TODO: Can eliminate foundPos?
     
     fseek( $f, $foundPos );
     
