@@ -136,8 +136,8 @@ function ShoppingItem(input) {
         if (response[0] === "!")
             console.error("Error: " + response);
         
-        var newChecked = this.checked === "true";
-        if (response !== newChecked) {
+        var newChecked = response === "true";
+        if (this.checked !== newChecked) {
             this.checked = newChecked;
             this.draw();
         }
