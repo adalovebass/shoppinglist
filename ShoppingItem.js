@@ -21,11 +21,37 @@ function ShoppingItem(input) {
             
         this.divElement = document.createElement("div");
 
-        // Give div some idea of the object it represents...
+        // Give div a reference to this object so we can operate on this object in response to div events...
         this.divElement.shoppingItem = this;
 
-        this.divElement.onclick = function(){
-            this.shoppingItem.handleClick(); // 'this' here is the div ;)
+        this.divElement.onmousedown = function() {
+            this.is_mouse_down = true;  // 'this' here is the div ;)
+            
+            var self = this;
+            setTimeout (
+                function ()
+                {
+                    console.log(self + " Trying mouse down timeout.");
+
+                    if ( self.is_mouse_down ) {
+                        console.log("mouse down after hold timeout.");
+                        self.is_mouse_down = false;
+                        self.shoppingItem.handleHold();
+                    }
+                }, 1000
+            );
+        };
+        
+        this.divElement.onmouseout = function() {
+            this.is_mouse_down = false;
+        };
+
+        this.divElement.onmouseup = function() {
+            
+            if ( this.is_mouse_down )
+                this.shoppingItem.handleClick();
+        
+            this.is_mouse_down = false;
         };
     };
     this.createDivElement();
@@ -94,7 +120,11 @@ function ShoppingItem(input) {
                 
         // TODO: Move this into dedicated model.
         var self = this;
-        $.post("./write.php", "action=toggleChecked&name=" + this.name +"&checked=" + desiredState, function(data){self.postDone(data)});
+        $.post("./write.php", "action=toggleChecked&name=" + this.name +"&checked=" + desiredState, function(data){self.postDone(data);});
+    };
+    
+    this.handleHold = function( ) {
+        console.log("Hold handled!");
     };
     
     this.postDone = function( response ) {
@@ -106,8 +136,9 @@ function ShoppingItem(input) {
         if (response[0] === "!")
             console.error("Error: " + response);
         
-        if (response !== this.checked) {
-            this.checked = (response === "true");
+        var newChecked = this.checked === "true";
+        if (response !== newChecked) {
+            this.checked = newChecked;
             this.draw();
         }
     };
